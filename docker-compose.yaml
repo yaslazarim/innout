@@ -1,0 +1,42 @@
+services:
+  php:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: innout_php
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: db_innout
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: INNOUT
+      MYSQL_USER: yas
+      MYSQL_PASSWORD: 123
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_ui
+    restart: always
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
