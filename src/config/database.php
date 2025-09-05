@@ -1,5 +1,7 @@
 <?php
 
+$conn = null;
+
 class Database{
     public static function getConnection(){
         $envPath = realpath(dirname(__FILE__) . '/../env.ini');
@@ -18,5 +20,12 @@ class Database{
         } catch (PDOException $e) {
             die("Erro na conexão: " . $e->getMessage());
         }
+    }
+
+    public static function getResultFromQuery($sql){
+        $conn = self::getConnection();
+        $result = $conn->query($sql);
+        $conn = null;
+        return $result;
     }
 }
