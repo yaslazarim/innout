@@ -18,7 +18,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: INNOUT
+      MYSQL_DATABASE: innout
       MYSQL_USER: yas
       MYSQL_PASSWORD: 123
     ports:
