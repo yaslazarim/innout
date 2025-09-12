@@ -30,12 +30,36 @@ class Model
         $this->values[$key] = $value;
     }
 
-    public static function getSelect($filters = [], $columns = '*')
+    public static function get($filters = [], $columns = '*')
     {
-        $sql = "SELECT {$columns} FROM "
+        $objects = [];
+        $result = static::getResultSetFromSelect($filters, $columns);
+        if($result){
+            $class = get_called_class();
+            while($row = $result->fetchAll(PDO::FETCH_ASSOC)){
+                array_push($objects, new $class($row));
+            }
+        }
+        return $objects;
+    }
+
+    public static function getResultSetFromSelect($filters = [], $columns = '*')
+    {
+        try {
+            $sql = "SELECT {$columns} FROM "
             . static::$tableName
             . static::getFilters($filters);
-        return $sql;
+
+            $result = Database::getResultFromQuery($sql);
+
+            if($result->rowCount() <= 0) {
+                return null;
+            }
+
+            return $result;
+        } catch (\Throwable $th) {
+            return null;
+        }
     }
 
     private static function getFilters($filters)
