@@ -26,6 +26,7 @@
                 <div class="form-group">
                     <label for="email">E-mail</label>
                     <input class="form-control"
+                    value="<?= $email ?>"
                         type="email"
                         id="email"
                         name="email"
