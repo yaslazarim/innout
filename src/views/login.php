@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <form class="form-login" action="#" method="">
+    <form class="form-login" action="#" method="POST">
         <div class="login-card card">
             <div class="card-header">
                 <i class="icofont-travelling mr-2"></i>
